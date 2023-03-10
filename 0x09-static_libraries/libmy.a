@@ -1,8 +1,0 @@
-README.md
-main.h
-creating the files .c using vim
-gcc -c *. c
-ar rsc libmy. a
-ar rcs libmy. a *.o
-run ls to list  all files 
-use this code to copy all .o files into library ar rcs libmy.a *.o
