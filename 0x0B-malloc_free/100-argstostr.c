@@ -1,52 +1,41 @@
 #include <stdlib.h>
 
 /**
- * strtow - converts a string into its separate words
+ * argstostr - converts array of strings to one string with newline separators
  *
- * @str: string to convert into words
+ * @ac: number of strings
+ * @av: array of strings
  *
- * Return: 2d array pointer
+ * Return: char * to concatenated string
  */
-char **strtow(char *str)
+char *argstostr(int ac, char **av)
 {
-	char **ret, *ptr = str;
-	int wc = 0, i = 0;
+	int size = 0, i;
+	char *ptr, *ret, *retptr;
 
-	if (str == 0 || *str == 0)
-		return (0);
-	while (*ptr)
-	{
-		if (!(*ptr == ' ') && (*(ptr + 1) == ' ' || *(ptr + 1) == 0))
-			wc++;
-		ptr++;
-	}
-	if (wc == 0)
+	if (ac == 0 || !av)
 		return (NULL);
-	ret = malloc((wc + 1) * sizeof(char *));
-	if (ret == 0)
-		return (0);
-	while (*str)
+
+	for (i = 0; i < ac; i++)
 	{
-		if (*str != ' ')
-		{
-			for (ptr = str, wc = 0; *ptr != ' ' && *ptr != 0;)
-				wc++, ptr++;
-			ret[i] = malloc(wc + 1);
-			if (ret[i] == 0)
-			{
-				while (i >= 0)
-					free(ret[--i]);
-				free(ret);
-				return (0);
-			}
-			ptr = ret[i++];
-			while (*str != ' ' && *str != 0)
-				*ptr++ = *str++;
-			*ptr = 0;
-		}
-		else
-			str++;
+		ptr = av[i];
+		while (*ptr++)
+			size++;
 	}
-	ret[i] = 0;
+
+	ret = malloc(size + 1 + ac);
+	if (!ret)
+		return (NULL);
+
+	retptr = ret;
+	for (i = 0; i < ac; i++)
+	{
+		for (ptr = av[i]; *ptr; ptr++, retptr++)
+		{
+			*retptr = *ptr;
+		}
+		*retptr++ = '\n';
+	}
+
 	return (ret);
 }
