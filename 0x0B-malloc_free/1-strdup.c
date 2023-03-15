@@ -31,3 +31,4 @@ char *_strdup(char *str)
 	s[a + 1] = '\0';
 	return (s);
 }
+
